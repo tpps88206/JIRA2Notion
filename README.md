@@ -47,7 +47,7 @@ We need Notion token to access your Notion database.
      ![notion03.gif](./docs/notion03.gif)
 
 - 4. Copy the database ID.
-    ```bash
+    ```shell
     https://www.notion.so/myworkspace/a8aec43384f447ed84390e8e42c2e089?v=...
                                       |--------- Database ID --------|
     ```
@@ -72,7 +72,7 @@ We must first create a Firestore database and link it.
 Go to your Firebase console, and setup Database with following schema.
 
 - Path
-    ```bash
+    ```shell
     users (collection)
     --> <AUTO_GENERATE_UID> (document)
     ----> (fields)
@@ -102,18 +102,18 @@ When everything is done, your Firestore will look like this:
 ### Manual run in local (Optioneal)
 
 After you finish the above configurations, then do
-```bash
+```shell
 yarn install
 node ./server/index.js
 ```
 
 ### Build docker
-```bash
-docker build -f scripts/dockerfile -t jira2notion:latest .
+```shell
+docker build -f scripts/Dockerfile -t jira2notion:latest .
 ```
 
 ### Run docker
-```bash
+```shell
 docker run -dit jira2notion
 ```
 

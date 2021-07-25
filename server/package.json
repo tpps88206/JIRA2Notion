@@ -1,7 +1,7 @@
 {
   "name": "jira2notion",
   "version": "0.1.0",
-  "description": "A small Node app to create or update Notion pages from Jira issuesgit ",
+  "description": "A small Node app to create or update Notion pages from Jira issues",
   "main": "index.js",
   "author": "tpps88206",
   "license": "MIT",

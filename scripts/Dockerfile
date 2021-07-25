@@ -5,6 +5,7 @@ WORKDIR /app
 COPY ./server /app/server
 
 # build
+WORKDIR /app/server
 RUN npm install
 RUN echo '00 09-21 * * 1-5 node /app/server/index.js' >> crontab.tmp \
     && crontab crontab.tmp \
