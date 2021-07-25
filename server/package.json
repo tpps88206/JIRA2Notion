@@ -1,0 +1,29 @@
+{
+  "name": "jira2notion",
+  "version": "0.1.0",
+  "description": "A small node app to create Notion pages from Jira issues",
+  "main": "index.js",
+  "author": "tpps88206",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@notionhq/client": "^0.2.3",
+    "firebase-admin": "^9.11.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "husky": "^4.3.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "2.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "prettier --write --ignore-unknown"
+    ]
+  }
+}
