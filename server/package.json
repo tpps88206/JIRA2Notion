@@ -12,18 +12,14 @@
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "husky": "^4.3.0",
-    "lint-staged": "^10.4.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "prettier": "2.3.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "lint-staged": {
-    "**/*": [
-      "prettier --write --ignore-unknown"
-    ]
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "scripts": {
+    "prepare": "cd .. && husky install server/.husky"
   }
 }
