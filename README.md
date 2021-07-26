@@ -6,6 +6,11 @@ A small Node app to create or update Notion pages from Jira issues.
 
 ![flow.png](./docs/flow.png)
 
+* [Features](#features)
+* [Prerequisitel](#prerequisite)
+* [Installation](#installation)
+* [License](#license)
+
 ## 🚀 Features
 - ✅ Import issues from JIRA into Notion regularly
     - Regularly time: Every hour from 09:00 through 21:00 on every day-of-week from Monday through Friday.
@@ -103,6 +108,7 @@ When everything is done, your Firestore will look like this:
 
 After you finish the above configurations, then do
 ```shell
+cd server
 yarn install
 node ./server/index.js
 ```
