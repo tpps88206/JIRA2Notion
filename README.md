@@ -120,7 +120,7 @@ docker build -f scripts/Dockerfile -t jira2notion:latest .
 
 ### Run docker
 ```shell
-docker run -dit jira2notion
+docker run --name jira2notion -dit jira2notion
 ```
 
 ## 🔑 License
