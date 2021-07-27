@@ -12,5 +12,4 @@ RUN echo '01 01-13 * * 1-5 node /app/server/index.js' >> crontab.tmp \
     && rm -rf crontab.tmp
 RUN crond
 
-# set default command to sh
-CMD ["sh"]
+CMD ['crond', '-l 2', '-f']

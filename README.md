@@ -13,7 +13,7 @@ A small Node app to create or update Notion pages from Jira issues.
 
 ## 🚀 Features
 - ✅ Import issues from JIRA into Notion regularly
-    - Regularly time: Every hour from 09:00 through 21:00 on every day-of-week from Monday through Friday.
+    - Regularly time: Every hour from 09:00 (UTC+8) through 21:00 (UTC+8) on every day-of-week from Monday through Friday.
     - Condition: Has been updated in the past 12 hours and is the current user’s issue.
 - ✅ Check whether the issue already exists in Notion to avoid repeated import.
 - ✅ Check whether the issue status of the existing Notion is the same as the status in JIRA, and update it.
@@ -23,7 +23,7 @@ A small Node app to create or update Notion pages from Jira issues.
 
 If you did not serve your own server, you do not need to create Firestore database.
 
-**Just follow step 1 and 2, generate your JIRA and Notion token.**
+**Just follow step 1 to 23 generate your JIRA and Notion token and setup Notion page.**
 
 And give your token to somebody who serves the server and Firestore database.
 
@@ -38,7 +38,29 @@ We need JIRA token to access your JIRA data without user ID and password.
 - 2. Copy your JIRA token.
     ![jira02.png](./docs/jira02.png)
 
-### 2. Generate Notion token and setup page
+### 2. Setup the Notion page
+
+The page which you want to import the JIRA issues need to have specified columns.
+
+In the real version, we have defined the following fields. 
+
+We expect to add more fields in the future and manage these fields through config.
+
+- Done
+    - type: `Checkbox`
+- Status
+    - type: `Single select`
+- Name
+    - type: `Title`
+- JIRA Key
+    - type: `Text`
+- JIRA Link
+    - type: `URL`
+    
+It will look like
+![notion04.png](./docs/notion04.png)
+
+### 3. Generate Notion token and setup page
 
 We need Notion token to access your Notion database.
 
@@ -57,7 +79,7 @@ We need Notion token to access your Notion database.
                                       |--------- Database ID --------|
     ```
 
-### 3. Connection file for Firestore (Optional)
+### 4. Connection file for Firestore (Optional)
 
 In order to store sensitive data, including information such as certificates and mailboxes, and to manage configuration parameters through the Firestore database in the future.
 
@@ -72,7 +94,7 @@ We must first create a Firestore database and link it.
 - 3. Please add it into `./server/configs` folder, and rename it to `serviceAccountKey.json`. **Remember do not commit yours `serviceAccountKey.json` to the cloud.**
      ![firestore03.png](./docs/firestore03.png)
      
-### 4. Configuration schema in Firestore (Optional)
+### 5. Configuration schema in Firestore (Optional)
 
 Go to your Firebase console, and setup Database with following schema.
 
@@ -104,21 +126,32 @@ When everything is done, your Firestore will look like this:
 
 - Node: v14.16.1
 
-### Manual run in local (Optioneal)
+### Auto run
 
 After you finish the above configurations, then do
+
+```shell
+sh ./scripts/runScript.sh
+```
+
+It will build the latest version of the code and name the container to `jira2notion` and auto run it.
+
+### Manual run in local (Optioneal)
+
+#### Run without docker in once time
+
 ```shell
 cd server
 yarn install
 node ./server/index.js
 ```
 
-### Build docker
+#### Build docker
 ```shell
 docker build -f scripts/Dockerfile -t jira2notion:latest .
 ```
 
-### Run docker
+#### Run docker
 ```shell
 docker run --name jira2notion -dit jira2notion
 ```
