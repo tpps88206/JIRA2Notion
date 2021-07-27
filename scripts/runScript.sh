@@ -7,5 +7,5 @@ if [ -f "./server/configs/serviceAccountKey.json" ]; then
     docker run --name jira2notion -dit jira2notion
     docker image prune -f
 else
-    echo "The ./server/configs/serviceAccountKey.json does not exists."
+    echo "Error ./server/configs/serviceAccountKey.json does not exists."
 fi

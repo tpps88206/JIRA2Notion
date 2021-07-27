@@ -7,9 +7,8 @@ COPY ./server /app/server
 # build
 WORKDIR /app/server
 RUN npm install
-RUN echo '01 01-13 * * 1-5 node /app/server/index.js' >> crontab.tmp \
+RUN echo "01 01-13 * * 1-5 node /app/server/index.js" >> crontab.tmp \
     && crontab crontab.tmp \
     && rm -rf crontab.tmp
-RUN crond
 
-CMD ['crond', '-l 2', '-f']
+CMD ["crond","-f"]
