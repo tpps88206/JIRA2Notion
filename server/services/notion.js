@@ -5,38 +5,38 @@ export const addIssue = (notion, notionDatabaseId, isDone, status, summary, jira
       properties: {
         Done: {
           type: 'checkbox',
-          checkbox: isDone
+          checkbox: isDone,
         },
         Status: {
-          select: { name: status }
+          select: { name: status },
         },
         Name: {
           title: [
             {
               type: 'text',
               text: {
-                'content': summary
-              }
-            }
-          ]
+                content: summary,
+              },
+            },
+          ],
         },
-        "JIRA Key": {
+        'JIRA Key': {
           rich_text: [
             {
-              type: "text",
+              type: 'text',
               text: {
-                content: jiraKey
-              }
-            }
-          ]
+                content: jiraKey,
+              },
+            },
+          ],
         },
-        "JIRA Link": {
-          url: jiraLink
-        }
+        'JIRA Link': {
+          url: jiraLink,
+        },
       },
     });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 
@@ -47,15 +47,15 @@ export const updateIssue = (notion, notionPageId, isDone, status) => {
       properties: {
         Done: {
           type: 'checkbox',
-          checkbox: isDone
+          checkbox: isDone,
         },
         Status: {
-          select: { name: status }
+          select: { name: status },
         },
       },
     });
   } catch (error) {
-    console.error(error)
+    console.error(error);
   }
 };
 
@@ -63,21 +63,16 @@ export const queryIssues = async (notion, notionDatabaseId) => {
   try {
     const response = await notion.databases.query({
       database_id: notionDatabaseId,
-      filter: {
-        and: [
-          {
-            property: "Done",
-            checkbox: {
-              equals: false
-            }
-          }
-        ]
-      }
+      sorts: [
+        {
+          timestamp: 'last_edited_time',
+          direction: 'descending',
+        },
+      ],
     });
 
-    return response
+    return response;
   } catch (error) {
-    console.error(`[services/notion.js] ${error}`);
+    console.error(error);
   }
 };
-
