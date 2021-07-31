@@ -1,4 +1,12 @@
-export const addIssue = (notion, notionDatabaseId, isDone, status, summary, jiraKey, jiraLink) => {
+export const addIssue = (
+  notion: any,
+  notionDatabaseId: string,
+  isDone: boolean,
+  status: string,
+  summary: string,
+  jiraKey: string,
+  jiraLink: string,
+) => {
   try {
     notion.pages.create({
       parent: { database_id: notionDatabaseId },
@@ -40,7 +48,7 @@ export const addIssue = (notion, notionDatabaseId, isDone, status, summary, jira
   }
 };
 
-export const updateIssue = (notion, notionPageId, isDone, status) => {
+export const updateIssue = (notion: any, notionPageId: string, isDone: boolean, status: string) => {
   try {
     notion.pages.update({
       page_id: notionPageId,
@@ -59,7 +67,7 @@ export const updateIssue = (notion, notionPageId, isDone, status) => {
   }
 };
 
-export const queryIssues = async (notion, notionDatabaseId) => {
+export const queryIssues = async (notion: any, notionDatabaseId: string) => {
   try {
     const response = await notion.databases.query({
       database_id: notionDatabaseId,

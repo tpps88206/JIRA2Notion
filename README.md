@@ -143,7 +143,7 @@ It will build the latest version of the code and name the container to `jira2not
 ```shell
 cd server
 yarn install
-node ./server/index.js
+yarn start
 ```
 
 #### Build docker

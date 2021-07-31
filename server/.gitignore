@@ -18,7 +18,9 @@ yarn-error.log*
 /coverage
 
 # production
+/lib
 /build
+/dist
 
 # sensitivity settings file
-/configs/serviceAccountKey.json
+/src/configs/serviceAccountKey.json

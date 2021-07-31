@@ -2,14 +2,22 @@
   "name": "jira2notion",
   "version": "0.1.0",
   "description": "A small Node app to create or update Notion pages from Jira issues",
-  "main": "index.js",
+  "main": "main.ts",
   "author": "tpps88206",
   "license": "MIT",
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tpps88206/JIRA2Notion.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tpps88206/JIRA2Notion/issues"
+  },
+  "homepage": "https://github.com/tpps88206/JIRA2Notion#readme",
   "dependencies": {
     "@notionhq/client": "^0.2.3",
     "firebase-admin": "^9.11.0",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.1",
+    "typescript": "^4.3.5"
   },
   "devDependencies": {
     "husky": "^7.0.1",
@@ -20,6 +28,11 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "dev": "node lib/main.js",
+    "start": "npm run build && npm run dev",
+    "lint": "eslint . --ext .ts",
     "prepare": "cd .. && husky install server/.husky"
   }
 }

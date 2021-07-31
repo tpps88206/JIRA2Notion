@@ -1,8 +1,8 @@
 import { Client } from '@notionhq/client';
 
-import { searchForIssuesUsingJQL } from './services/jira.js';
-import Firestore from './services/firestore.js';
-import { addIssue, queryIssues, updateIssue } from './services/notion.js';
+import { searchForIssuesUsingJQL } from './services/jira';
+import Firestore from './services/firestore';
+import { addIssue, queryIssues, updateIssue } from './services/notion';
 
 const run = async () => {
   await Firestore.init();
@@ -24,12 +24,12 @@ const run = async () => {
         return;
       }
 
-      let needAddItems = [];
-      let needUpdateItems = [];
+      let needAddItems: any = [];
+      let needUpdateItems: any = [];
 
       for (const issue of jiraData.issues) {
         let isExist = false;
-        notionData.results.forEach(notionIssue => {
+        notionData.results.forEach((notionIssue: any) => {
           // Check whether the current JIRA issue already exists in Notion
           if (notionIssue.properties['JIRA Key']?.rich_text[0]?.text?.content === issue.key) {
             isExist = true;
