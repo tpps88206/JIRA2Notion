@@ -1,4 +1,5 @@
 import * as admin from 'firebase-admin';
+
 import * as serviceAccount from '../configs/serviceAccountKey.json';
 import { User } from '../types/user';
 

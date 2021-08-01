@@ -3,14 +3,24 @@ import { Client } from '@notionhq/client';
 import { searchForIssuesUsingJQL } from './services/jira';
 import Firestore from './services/firestore';
 import { addIssue, queryIssues, updateIssue } from './services/notion';
+import { JiraIssue, JiraSearchForIssuesResponse } from './types/jira';
+import { NotionQueryIssuesResponse, NotionIssue } from './types/notion';
+import { Issue } from './types/common';
 
 const run = async () => {
+  // Initialize Firestore and connect to database to get all user's config
   await Firestore.init();
 
   try {
+    if (!Firestore.Users) {
+      console.log('No user config in Firestore or some error with database');
+      return;
+    }
+
     for (const user of Firestore.Users) {
       // Get JIRA issues with JQL
-      const jiraData = await searchForIssuesUsingJQL(user.jiraEmail, user.jiraToken);
+      const jiraData: JiraSearchForIssuesResponse = await searchForIssuesUsingJQL(user.jiraEmail, user.jiraToken);
+
       if (!jiraData.issues || !Array.isArray(jiraData.issues)) {
         console.log('No ticket need to update in JIRA.');
         return;
@@ -18,18 +28,20 @@ const run = async () => {
 
       // Get Notion issues
       const notion = new Client({ auth: user.notionToken });
-      const notionData = await queryIssues(notion, user.notionDatabaseId);
+      const notionData: NotionQueryIssuesResponse = await queryIssues(notion, user.notionDatabaseId);
+
       if (!notionData.results || !Array.isArray(notionData.results)) {
         console.log('The Notion result is empty.');
         return;
       }
 
-      let needAddItems: any = [];
-      let needUpdateItems: any = [];
+      let needAddItems: JiraIssue[] = [];
+      let needUpdateItems: Issue[] = [];
 
       for (const issue of jiraData.issues) {
         let isExist = false;
-        notionData.results.forEach((notionIssue: any) => {
+
+        notionData.results.forEach((notionIssue: NotionIssue) => {
           // Check whether the current JIRA issue already exists in Notion
           if (notionIssue.properties['JIRA Key']?.rich_text[0]?.text?.content === issue.key) {
             isExist = true;

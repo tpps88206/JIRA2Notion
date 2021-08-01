@@ -1,4 +1,6 @@
-export const addIssue = (
+import { NotionQueryIssuesResponse } from '../types/notion';
+
+export const addIssue: (
   notion: any,
   notionDatabaseId: string,
   isDone: boolean,
@@ -6,7 +8,7 @@ export const addIssue = (
   summary: string,
   jiraKey: string,
   jiraLink: string,
-) => {
+) => void = (notion, notionDatabaseId, isDone, status, summary, jiraKey, jiraLink) => {
   try {
     notion.pages.create({
       parent: { database_id: notionDatabaseId },
@@ -48,7 +50,12 @@ export const addIssue = (
   }
 };
 
-export const updateIssue = (notion: any, notionPageId: string, isDone: boolean, status: string) => {
+export const updateIssue: (notion: any, notionPageId: string, isDone: boolean, status: string) => void = (
+  notion,
+  notionPageId,
+  isDone,
+  status,
+) => {
   try {
     notion.pages.update({
       page_id: notionPageId,
@@ -67,9 +74,12 @@ export const updateIssue = (notion: any, notionPageId: string, isDone: boolean, 
   }
 };
 
-export const queryIssues = async (notion: any, notionDatabaseId: string) => {
+export const queryIssues: (notion: any, notionDatabaseId: string) => Promise<NotionQueryIssuesResponse> = async (
+  notion,
+  notionDatabaseId,
+) => {
   try {
-    const response = await notion.databases.query({
+    return await notion.databases.query({
       database_id: notionDatabaseId,
       sorts: [
         {
@@ -78,8 +88,6 @@ export const queryIssues = async (notion: any, notionDatabaseId: string) => {
         },
       ],
     });
-
-    return response;
   } catch (error) {
     console.error(error);
   }
