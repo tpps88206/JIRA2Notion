@@ -1,33 +1,36 @@
 import * as admin from 'firebase-admin';
 import * as serviceAccount from '../configs/serviceAccountKey.json';
+import { User } from '../types/user';
 
 // Initialize Firestore
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as any),
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
 });
 
 // Connect Firestore database
-const db = admin.firestore();
+const db: FirebaseFirestore.Firestore = admin.firestore();
 
-export const getUsers = async () => {
+export const getUsers: () => Promise<User[]> = async () => {
   try {
-    const result: any = [];
+    const result: User[] = [];
 
-    const usersRef = db.collection('users');
+    const usersRef: FirebaseFirestore.CollectionReference<FirebaseFirestore.DocumentData> = db.collection('users');
     const snapshot = await usersRef.get();
 
-    snapshot.forEach(document => {
-      result.push(document.data());
+    snapshot.forEach((document: FirebaseFirestore.QueryDocumentSnapshot<FirebaseFirestore.DocumentData>) => {
+      result.push(document.data() as User);
     });
 
     return result;
   } catch (error) {
     console.error(error);
+
+    return [];
   }
 };
 
 class Firestore {
-  public Users: any | undefined;
+  public Users: User[] | undefined;
 
   constructor() {}
 
